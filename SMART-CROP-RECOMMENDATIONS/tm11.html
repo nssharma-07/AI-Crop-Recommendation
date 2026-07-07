@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Pirates - Portfolio & Plant Info</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        
+        .header-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        
+        .header-mini-logo {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            animation: pulse-border 2.5s ease-in-out infinite;
+        }
+        
+        .header-title {
+            font-family: 'Georgia', 'serif';
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            animation: glow 3s ease-in-out infinite;
+        }
+        
+        .section-title {
+            border-bottom: 2px solid #4a5568;
+            padding-bottom: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: bold;
+            color: #e2e8f0;
+            text-shadow: 0 0 8px rgba(99, 179, 237, 0.6);
+            animation: section-title-glow 3s ease-in-out infinite;
+        }
+        
+        .card {
+            background-color: #2d3748;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #4a5568;
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
+        }
+        
+        #details .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.8);
+        }
+        
+        nav a {
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #63b3ed;
+        }
+        /* --- Project Info Box Style --- */
+        
+        .info-box {
+            background-color: #2d3748;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 2px solid #a78bfa;
+            box-shadow: 0 0 20px rgba(167, 139, 250, 0.6);
+        }
+        
+        .info-box h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #4a5568;
+            padding-bottom: 0.5rem;
+        }
+        
+        .info-box p,
+        .info-box li {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+        /* --- Marquee Effect Styles --- */
+        
+        .marquee-container {
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        .marquee-content {
+            display: flex;
+            width: 200%;
+            animation: scroll-right-to-left 40s linear infinite;
+        }
+        
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+        
+        .marquee-item {
+            flex-shrink: 0;
+            width: 50%;
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .gallery-item {
+            grid-template-columns: repeat(7, 1fr);
+        }
+        
+        .portfolio-item {
+            grid-template-columns: repeat(5, 1fr);
+        }
+        /* --- App Button Style --- */
+        
+        .launch-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            border-radius: 0.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
+            animation: pulse-button 2s ease-in-out infinite;
+        }
+        
+        .launch-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(139, 92, 246, 1);
+        }
+        /* --- ANIMATION STYLES --- */
+        
+        @keyframes glow {
+            0%,
+            100% {
+                text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7), 0 0 5px #63b3ed, 0 0 10px #63b3ed, 0 0 15px #63b3ed;
+            }
+            50% {
+                text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7), 0 0 10px #3b82f6, 0 0 20px #3b82f6, 0 0 30px #3b82f6;
+            }
+        }
+        
+        #logo-container {
+            animation: pulse-border 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-border {
+            0%,
+            100% {
+                border-color: #63b3ed;
+                box-shadow: 0 0 10px #63b3ed, 0 0 15px #63b3ed inset;
+            }
+            50% {
+                border-color: #a78bfa;
+                box-shadow: 0 0 25px #a78bfa, 0 0 30px #a78bfa inset;
+            }
+        }
+        
+        @keyframes section-title-glow {
+            0%,
+            100% {
+                text-shadow: 0 0 8px rgba(99, 179, 237, 0.6), 0 0 15px rgba(99, 179, 237, 0.4);
+            }
+            50% {
+                text-shadow: 0 0 12px rgba(59, 130, 246, 0.8), 0 0 25px rgba(59, 130, 246, 0.6);
+            }
+        }
+        
+        @keyframes pulse-button {
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
+            }
+            50% {
+                transform: scale(1.03);
+                box-shadow: 0 0 25px rgba(139, 92, 246, 1);
+            }
+        }
+        
+        @keyframes scroll-right-to-left {
+            0% {
+                transform: translateX(0%);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <header class="bg-gray-900 text-white text-center py-12 shadow-lg">
+        <div class="header-title-container">
+            <img src="111.jpg" alt="Mini Logo Left" class="header-mini-logo">
+            <h1 class="text-5xl md:text-7xl font-bold header-title">CODING PIRATES</h1>
+            <img src="111.jpg" alt="Mini Logo Right" class="header-mini-logo">
+        </div>
+        <p class="mt-4 text-lg text-gray-400">SMART CROP RECOMMENDATION</p>
+    </header>
+
+    <nav class="bg-gray-800 sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto px-6 py-3 flex justify-center items-center space-x-6 md:space-x-12">
+            <a href="#about" class="text-gray-300 font-semibold text-lg">About</a>
+            <a href="#portfolio" class="text-gray-300 font-semibold text-lg">Portfolio</a>
+            <a href="#gallery" class="text-gray-300 font-semibold text-lg">Gallery</a>
+            <a href="#details" class="text-gray-300 font-semibold text-lg">Plant Info</a>
+            <a href="#graphs" class="text-gray-300 font-semibold text-lg">Graphs</a>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-6 md:p-12">
+
+        <section id="logo" class="my-16 flex justify-center items-center">
+            <div id="logo-container" class="p-4 bg-gray-800 rounded-full shadow-2xl border-2 border-blue-400">
+                <img src="111.jpg" alt="Coding Pirates Main Logo" class="w-48 h-48 md:w-64 md:h-64 object-cover rounded-full">
+            </div>
+        </section>
+
+        <section class="my-16 text-center">
+            <a href="http://localhost:8501" target="_blank" class="launch-button">
+                🚀 LAUNCH CROP RECOMMENDATION APP 🚀
+            </a>
+        </section>
+
+        <section id="about" class="my-16">
+            <h2 class="text-4xl section-title">ABOUT THE PROJECT</h2>
+
+            <div class="info-box">
+                <h3>Project Overview</h3>
+                <p>
+                    This Smart Crop Recommendation system is a full-stack application designed to assist farmers in making informed decisions about crop selection. By inputting environmental factors such as soil nutrient levels (Nitrogen, Phosphorus, Potassium), temperature,
+                    humidity, pH, and rainfall, the system leverages a machine learning model to predict the most suitable crop for those specific conditions.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="info-box">
+                    <h3>Challenges & Solutions</h3>
+                    <ul class="list-disc list-inside">
+                        <li><strong>Challenge:</strong> Ensuring model accuracy with diverse data.
+                            <br><strong>Solution:</strong> We selected a Random Forest model due to its robustness and high accuracy. We also preprocessed the data carefully to handle any inconsistencies.
+                        </li>
+                        <li class="mt-2"><strong>Challenge:</strong> Creating an intuitive user interface.
+                            <br><strong>Solution:</strong> Streamlit was chosen for the app interface for its simplicity, allowing us to build an interactive dashboard with minimal code. The landing page was designed to be visually engaging and easy to
+                            navigate.
+                        </li>
+                    </ul>
+                </div>
+                <div class="info-box">
+                    <h3>Tools & Technologies Used</h3>
+                    <ul class="list-disc list-inside">
+                        <li><strong>Frontend:</strong> HTML, Tailwind CSS, JavaScript</li>
+                        <li><strong>Backend:</strong> Python, Streamlit</li>
+                        <li><strong>Machine Learning:</strong> Scikit-learn (RandomForestClassifier), Pandas, NumPy</li>
+                        <li><strong>Data Visualization:</strong> Chart.js, Matplotlib</li>
+                        <li><strong>Deployment:</strong> Localhost server via Streamlit</li>
+                    </ul>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="portfolio" class="my-16">
+            <h2 class="text-4xl section-title">TEAM CODING PIRATES</h2>
+            <div class="marquee-container">
+                <div class="marquee-content" style="animation-duration: 30s;">
+                    <div class="marquee-item portfolio-item px-2">
+                        <div class="card"><img src="13.jpg" alt="Team Member 3" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="15.jpg" alt="Team Member 1" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="14.jpg" alt="Team Member 2" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="12.jpg" alt="Team Member 4" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="11.jpg" alt="Team Member 5" class="w-full h-full object-cover"></div>
+                    </div>
+                    <div class="marquee-item portfolio-item px-2">
+                        <div class="card"><img src="13.jpg" alt="Team Member 3" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="15.jpg" alt="Team Member 1" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="14.jpg" alt="Team Member 2" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="12.jpg" alt="Team Member 4" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="11.jpg" alt="Team Member 5" class="w-full h-full object-cover"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="my-16">
+            <h2 class="text-4xl section-title">Plant Gallery</h2>
+            <div class="marquee-container">
+                <div class="marquee-content">
+                    <div class="marquee-item gallery-item px-2">
+                        <div class="card"><img src="222.jpg" alt="Rice paddies" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?q=80&w=800" alt="Oranges on a tree" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="8.jpg" alt="Wheat field" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="9.jpg" alt="Soybeans" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=800" alt="Potatoes" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="7.jpg" alt="Sugarcane field" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="6.jpg" alt="Sunflower field" class="w-full h-full object-cover"></div>
+                    </div>
+                    <div class="marquee-item gallery-item px-2">
+                        <div class="card"><img src="222.jpg" alt="Rice paddies" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?q=80&w=800" alt="Oranges on a tree" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="8.jpg" alt="Wheat field" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="9.jpg" alt="Soybeans" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=800" alt="Potatoes" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="7.jpg" alt="Sugarcane field" class="w-full h-full object-cover"></div>
+                        <div class="card"><img src="6.jpg" alt="Sunflower field" class="w-full h-full object-cover"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="details" class="my-16">
+            <h2 class="text-4xl section-title">Plant Details</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card flex flex-col sm:flex-row">
+                    <img src="2.jpg" alt="Chickpeas" class="w-full sm:w-1/3 h-auto object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2">Chickpea</h3>
+                        <p class="text-gray-400">The chickpea is a versatile legume known for its nutty taste and high protein content. It's a key ingredient in dishes like hummus and curry.</p>
+                        <p class="text-gray-400 mt-2"><b>Climate & pH:</b> Chickpeas thrive in moderately warm summers with daytime temperatures between 70°F and 80°F. They prefer well-drained, loamy or sandy soils with a pH between 6.0 and 7.0.</p>
+                    </div>
+                </div>
+                <div class="card flex flex-col sm:flex-row">
+                    <img src="4.jpg" alt="Coffee beans and a cup of coffee" class="w-full sm:w-1/3 h-auto object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2">Coffee</h3>
+                        <p class="text-gray-400">Coffee is a globally popular brewed drink made from roasted coffee beans. It is cherished for its stimulating effects and rich aroma.</p>
+                        <p class="text-gray-400 mt-2"><b>Climate & pH:</b> Coffee plants prefer a mild, tropical climate with temperatures between 60°F and 70°F. They grow best in well-drained, volcanic soils with a pH of 5.0 to 6.0.</p>
+                    </div>
+                </div>
+                <div class="card flex flex-col sm:flex-row">
+                    <img src="5.jpg" alt="Kidney Beans" class="w-full sm:w-1/3 h-auto object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2">Kidney Beans</h3>
+                        <p class="text-gray-400">Named for their shape, kidney beans are a variety of the common bean. They are rich in fiber and are a staple in cuisines worldwide, especially in chili.</p>
+                        <p class="text-gray-400 mt-2"><b>Climate & pH:</b> Kidney beans are a warm-weather crop, growing best in temperatures between 65°F and 85°F. The ideal soil is well-drained with a pH between 6.0 and 7.0.</p>
+                    </div>
+                </div>
+                <div class="card flex flex-col sm:flex-row">
+                    <img src="3.jpg" alt="Jute fabric" class="w-full sm:w-1/3 h-auto object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2">Jute</h3>
+                        <p class="text-gray-400">Jute is a natural fiber derived from plants. It's used to make burlap, hessian, or gunny cloth and is known for being affordable and eco-friendly.</p>
+                        <p class="text-gray-400 mt-2"><b>Climate & pH:</b> Jute grows best in a warm, humid climate with temperatures between 75°F and 95°F. It thrives in loamy alluvial soils with a pH between 6.0 and 7.5.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="graphs" class="my-16">
+            <h2 class="text-4xl section-title">Crop Suitability Graphs</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card p-4"><canvas id="phChart"></canvas></div>
+                <div class="card p-4"><canvas id="climateChart"></canvas></div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-900 text-center text-gray-500 text-sm py-6">
+        <p>&copy; 2025 Coding Pirates. All rights reserved.</p>
+        <p id="datetime-container" class="mt-2 text-gray-400"></p>
+    </footer>
+
+    <script>
+        const cropLabels = ['Chickpea', 'Coffee', 'Kidney Beans', 'Jute'];
+        const textColor = '#e2e8f0';
+        const gridColor = '#4a5568';
+
+        // --- pH Chart ---
+        const phData = {
+            labels: cropLabels,
+            datasets: [{
+                label: 'Ideal pH Range',
+                data: [
+                    [6.0, 7.0],
+                    [5.0, 6.0],
+                    [6.0, 7.0],
+                    [6.0, 7.5]
+                ],
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1,
+                borderRadius: 5,
+                borderSkipped: false,
+            }]
+        };
+        const phConfig = {
+            type: 'bar',
+            data: phData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'Ideal pH Levels for Crops',
+                        color: textColor,
+                        font: {
+                            size: 18
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: textColor
+                        },
+                        grid: {
+                            color: gridColor
+                        }
+                    },
+                    y: {
+                        beginAtZero: false,
+                        ticks: {
+                            color: textColor
+                        },
+                        grid: {
+                            color: gridColor
+                        },
+                        title: {
+                            display: true,
+                            text: 'pH Level',
+                            color: textColor
+                        }
+                    }
+                }
+            }
+        };
+        new Chart(document.getElementById('phChart'), phConfig);
+
+        // --- Climate Chart ---
+        const climateData = {
+            labels: cropLabels,
+            datasets: [{
+                label: 'Ideal Temperature Range (°F)',
+                data: [
+                    [70, 80],
+                    [60, 70],
+                    [65, 85],
+                    [75, 95]
+                ],
+                backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                borderColor: 'rgba(255, 159, 64, 1)',
+                borderWidth: 1,
+                borderRadius: 5,
+                borderSkipped: false,
+            }]
+        };
+        const climateConfig = {
+            type: 'bar',
+            data: climateData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'Ideal Climate Conditions (°F)',
+                        color: textColor,
+                        font: {
+                            size: 18
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: textColor
+                        },
+                        grid: {
+                            color: gridColor
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: textColor
+                        },
+                        grid: {
+                            color: gridColor
+                        },
+                        title: {
+                            display: true,
+                            text: 'Temperature (°F)',
+                            color: textColor
+                        }
+                    }
+                }
+            }
+        };
+        new Chart(document.getElementById('climateChart'), climateConfig);
+
+        // --- Date/Time Clock ---
+        function updateDateTime() {
+            const now = new Date();
+            document.querySelector("#datetime-container").textContent = now.toLocaleString();
+        }
+        setInterval(updateDateTime, 1000);
+    </script>
+</body>
+
+</html>
